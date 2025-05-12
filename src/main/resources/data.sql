@@ -1,0 +1,2 @@
+INSERT INTO products (id, name, price) VALUES ('d290f1ee-6c54-4b01-90e6-d701748f0851', 'Laptop', 1200.00);
+INSERT INTO products (id, name, price) VALUES ('e7a1e220-4b5f-4982-b466-cd3b7b36c198', 'Monitor', 800.00);
