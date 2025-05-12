@@ -22,16 +22,20 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(String id) {
         return parseUUID(id)
                 .flatMap(productRepository::findById)
-                .map(this::toResponse)
+                .map(this::builResponse)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id " + id));
     }
 
     @Override
     public ProductResponse addProduct(ProductRequest request) {
-        return null;
+        Product product = Product.builder()
+                .name(request.name())
+                .price(request.price())
+                .build();
+        return builResponse(productRepository.save(product));
     }
 
-    private ProductResponse toResponse(Product product) {
+    private ProductResponse builResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId().toString())
                 .name(product.getName())
