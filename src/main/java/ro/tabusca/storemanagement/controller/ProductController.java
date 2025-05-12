@@ -3,6 +3,7 @@ package ro.tabusca.storemanagement.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ro.tabusca.storemanagement.model.AllProductsResponse;
 import ro.tabusca.storemanagement.model.ChangePriceRequest;
@@ -33,6 +34,7 @@ public class ProductController {
     }
 
     @PatchMapping("/changePrice/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse updatePrice(@PathVariable String id,
                                        @Valid @RequestBody ChangePriceRequest request) {
         return productService.updatePrice(id, request);
