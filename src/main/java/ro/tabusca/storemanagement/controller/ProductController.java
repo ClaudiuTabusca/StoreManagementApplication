@@ -1,16 +1,28 @@
 package ro.tabusca.storemanagement.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import ro.tabusca.storemanagement.model.ProductRequest;
+import ro.tabusca.storemanagement.model.ProductResponse;
+import ro.tabusca.storemanagement.service.ProductService;
 
 @RestController()
 @RequestMapping("products")
+@AllArgsConstructor
 public class ProductController {
+    private ProductService productService;
 
-    @GetMapping("/{id}")
-    public String getProduct(@PathVariable String id) {
-        return "This is the product " + id;
+    @GetMapping("/getProduct/{id}")
+    public ProductResponse getProductById(@PathVariable String id) {
+        return productService.getProductById(id);
     }
+
+    @PostMapping("/addProduct")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductResponse addProduct(@Valid @RequestBody ProductRequest request) {
+        return productService.addProduct(request);
+    }
+
 }
