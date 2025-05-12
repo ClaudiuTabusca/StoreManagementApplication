@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ro.tabusca.storemanagement.model.ChangePriceRequest;
 import ro.tabusca.storemanagement.model.ProductRequest;
 import ro.tabusca.storemanagement.model.ProductResponse;
 import ro.tabusca.storemanagement.service.ProductService;
@@ -23,6 +24,12 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse addProduct(@Valid @RequestBody ProductRequest request) {
         return productService.addProduct(request);
+    }
+
+    @PatchMapping("/changePrice/{id}")
+    public ProductResponse updatePrice(@PathVariable String id,
+                                       @Valid @RequestBody ChangePriceRequest request) {
+        return productService.updatePrice(id, request);
     }
 
 }
