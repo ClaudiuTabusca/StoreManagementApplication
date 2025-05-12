@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ro.tabusca.storemanagement.entity.Product;
 import ro.tabusca.storemanagement.exception.ProductNotFoundException;
+import ro.tabusca.storemanagement.model.AllProductsResponse;
 import ro.tabusca.storemanagement.model.ChangePriceRequest;
 import ro.tabusca.storemanagement.model.ProductRequest;
 import ro.tabusca.storemanagement.model.ProductResponse;
@@ -12,6 +13,7 @@ import ro.tabusca.storemanagement.repository.ProductRepository;
 import ro.tabusca.storemanagement.service.ProductService;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +21,14 @@ public class ProductServiceImpl implements ProductService {
     private static final String PRODUCT_NOT_FOUND = "Product not found with id ";
 
     private ProductRepository productRepository;
-
+    @Override
+    public  AllProductsResponse getAllProducts() {
+        return AllProductsResponse.builder()
+                .products(productRepository.findAll().stream()
+                        .map(this::builResponse)
+                        .collect(Collectors.toList()))
+                .build();
+    }
 
     @Override
     public ProductResponse getProductById(String id) {

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ro.tabusca.storemanagement.model.AllProductsResponse;
 import ro.tabusca.storemanagement.model.ChangePriceRequest;
 import ro.tabusca.storemanagement.model.ProductRequest;
 import ro.tabusca.storemanagement.model.ProductResponse;
@@ -14,6 +15,11 @@ import ro.tabusca.storemanagement.service.ProductService;
 @AllArgsConstructor
 public class ProductController {
     private ProductService productService;
+
+    @GetMapping("/getAllProducts")
+    public AllProductsResponse getAllProducts() {
+        return productService.getAllProducts();
+    }
 
     @GetMapping("/getProduct/{id}")
     public ProductResponse getProductById(@PathVariable String id) {
